@@ -1,5 +1,5 @@
 import {TodoProvider} from "./context/TodoContext"
-
+import {useEffect, useState} from "react"
 function App() {
     //by default hum isme empty array pass krenge jesa humne todo project me dekha tha as render krte same issue na aye
     //isme todos me sari todos hongi 
@@ -34,9 +34,32 @@ function App() {
         setTodos((prev)=>prev.map((prevTodo)=>prevTodo.id === id ? {...prevTodo , completed:!prevTodo.completed} : prevTodo))
     }
 
+   
+    useEffect(()=> {
+        //sabse phele kya krna ha apko saari values lekar ani hain aap localstorage directly access krskte ho jabh tk aap react me ho jabh tk aap server site rendering ki baat nhi kr rhe kyuki agar sara kaam server pe hogya toh kabhi browser pe aya hi nhi toh localstorage kese kaam krega 
+        //abhi me get kr rha ho kyuki mene set nhi kiya hain get krna phele zaruri hain 
+        //this getItem will give u value of corresponding key u have gave but yeh sari ki sari value hoti hain string me but hume chaiye json toh hum ese use nhi krenge
+        // localStorage.getItem("todos")
+        //JSON.parse yeh apko direclty js deta hain isme apna yeh localStorage wala pass krdo  
+         const todos = JSON.parse(localStorage.getItem("todos"))
+         //abh values ko set kro agar usme kuch ho toh todos likhne ka matalb ki voh exist krta hain aur eventually yeh ek array ha toh length > 0 honi chaiye tabhi set krenge nah
+         if(todos && todos.length > 0) {
+            setTodos(todos)
+         }
+    } , [])
+
+    // //iss se yeh ha ki jabh load hua toh sare ke sare todos agye but jese hi yeh sari values load horhi hain me usko localstorage me add krvana chahta hun aur kab add krvana chahta hun jab todos me kuch change hoga tab add krenge localStorage me aur tum try kroge ki apne iss useEffect me dependency me todos daldoge but problem yeh ha ki usme agar kuch bhi change ayega toh voh dubara se usko get bhi krega so we use second useEffect separately we can use multiple useEffect
+
+    useEffect(()=> {
+        //isme hume key aur value dena padta hain aur joh naam keys ka tumne getItem me diya ha lete same vohi same setItem me ayega  aur JSON.stringify string me convert krdega aur humari todos humne pass krdi 
+        localStorage.setItem("todos" , JSON.stringify(todos))
+    } , [])
+
+
+
   return (
     //Provider kya provide krega toh value bhi pass krni padegi value me hum voh sare property/attribute pass krte hain joh humne createContext me banaye hain 
-    <TodoProvider value={{todos , addTodo , updatedTodo , deleteTodo , toggleComplete , Tod}}>
+    <TodoProvider value={{todos , addTodo , updatedTodo , deleteTodo , toggleComplete}}>
       <div className="bg-[#172842] min-h-screen py-8">
                 <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
                     <h1 className="text-2xl font-bold text-center mb-8 mt-2">Manage Your Todos</h1>
