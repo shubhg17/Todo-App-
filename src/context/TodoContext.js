@@ -3,7 +3,7 @@ import {createContext , useContext} from "react"
 const TodoContext = createContext({
   //hum  parameters yaha paas krte hain aur unme functionality App.jsx me dalte hain jese humne pichli video me dekha same 
   
-  // Here todos property ha aur baki addTodo updatedTodo , deleteTodo , toggleComplete yeh sare method/function hain  method ki functionality toh me app.jsx me likhunga aur joh values mujhe todo se hi leni hain component koi bhi me values yahi se lunga 
+  // Here todos property ha aur baki addTodo updatedTodo , deleteTodo , toggleComplete yeh sare method/function hain  method ki functionality toh me app.jsx me likhunga aur joh values mujhe todo se hi leni hain component koi bhi ho me values yahi se lunga 
     todos: [
        {
          id:1,
