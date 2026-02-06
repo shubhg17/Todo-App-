@@ -24,8 +24,14 @@ function App() {
     }
 
     const deleteTodo = (id)=> { 
-        //delete krte same generally filter use krte ha isme conditon joh satisfy nhi kr payenge voh to as it is rahenge lekin jiski id humare prevTodo ki id se match hogyi voh delete hojayega 
+        //delete krte same generally filter use krte ha isme conditon joh satisfy nhi kr payenge voh to as it is rahenge lekin jiski id humare prevTodo ki id se match hogyi voh delete hojayega voh return nhi hoga 
         setTodos((prev)=>prev.filter((prevTodo)=> prevTodo.id !== id))
+    }
+
+     //isme hume apne todos me jana padega aur toggle krna padega apne checked ko true or false 
+    const toggleComplete = ()=> {
+//kya kiya basically prev me old state leli jisme humari array ayegi todo wali uspe map lagaya aur joh todo ki id humari id se match hogi usme completed property ko sirf change krdiya aur baki sabko same rkhna tha toh spread operator ka use krliya jabh id match hogi but id jabh match nhi hogi then todo ko same rhene do toh prevTodo
+        setTodos((prev)=>prev.map((prevTodo)=>prevTodo.id === id ? {...prevTodo , completed:!prevTodo.completed} : prevTodo))
     }
 
   return (
