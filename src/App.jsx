@@ -1,5 +1,7 @@
 import {TodoProvider} from "./context/TodoContext"
 import {useEffect, useState} from "react"
+import TodoForm from "./components/TodoForm.jsx"
+import TodoItem from "./components/TodoItem.jsx"
 function App() {
     //by default hum isme empty array pass krenge jesa humne todo project me dekha tha as render krte same issue na aye
     //isme todos me sari todos hongi 
@@ -55,7 +57,7 @@ function App() {
     useEffect(()=> {
         //isme hume key aur value dena padta hain aur joh naam keys ka tumne getItem me diya ha lete same vohi same setItem me ayega  aur JSON.stringify string me convert krdega aur humari todos humne pass krdi 
         localStorage.setItem("todos" , JSON.stringify(todos))
-    } , [])
+    } , [todos]) // Because of [], it runs only once → initial empty array save ho jata hai → refresh pe todos vanish. we need to add todos also so after refreshing all our todos stays there and not vanish 
 
 
 
@@ -70,6 +72,14 @@ function App() {
                     </div>
                     <div className="flex flex-wrap gap-y-3">
                         {/*Loop and Add TodoItem here */}
+ {/* // agar hum (todo)=> { } ese krte hain toh return keyword lagana padta hain but agar hum ese likhe (todo)=> () iska mtb auto return hota ha  */}
+                        {todos.map((todo)=> (
+//we can also use index but if id u have prefer that that is more suitable as compared to index 
+                            <div key={todo.id}
+                             className="w-full">
+                                <TodoItem todo = {todo} />
+                            </div>
+                        ))}
                     </div>
                 </div>
        </div>

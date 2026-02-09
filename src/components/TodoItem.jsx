@@ -1,7 +1,28 @@
 import React from "react"
+import {useState} from "react"
+// because "./" means same folder (components), while context is one level up, therefore "../".
+import {useTodo} from "../context/TodoContext.js"
 
 function TodoItem({ todo }) {
-    
+
+ //by default toh editable  hoga tabhi toh voh icon show hota hain edit krne ka 
+ const [isTodoEditable , setIsTodoEditable] = useState(true);
+ const [todoMsg , setTodoMsg] = useState(todo.todo)
+
+    //sabse phela kaam ha context lekar ana as ussi se toh functionality ayegi 
+const {updatedTodo , deleteTodo , toggleComplete} = useTodo()
+
+  const  editTodo = ()=> {
+    //see we are not changing id as id we only need such that to get particular todo which u need to update thats it and then for todo u need to spread as it is an object and just change ur todo message as on update we only need to change message thats it 
+     updatedTodo(todo.id , {...todo , todo:todoMsg})
+     //abh todo editable hogya hain toh uski state change krdo
+     setIsTodoEditable(false);
+  }
+
+  const toggleCompleted= () => {
+    //yeh toggleCompleted mere context se arha hain aur toggleComplete mene method banaya hain 
+     toggleComplete(todo.id)
+  }
 
     return (
         <div
