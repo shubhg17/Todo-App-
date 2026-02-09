@@ -17,7 +17,7 @@ const TodoContext = createContext({
     updatedTodo : (id , todo)=> {} ,
     //as jabh delete kroge todo ko toh sirf id ki need hogi 
     deleteTodo : (id) => {} ,
-    //isme bhi id chaiye hoki baki kaam css ka hain 
+    //isme bhi id chaiye hogi baki kaam css ka hain 
     toggleComplete: (id) => {}
 })
 export {TodoContext}

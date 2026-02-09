@@ -9,9 +9,11 @@ function App() {
     const addTodo = (todo) => {
         //this is wrong as todos me joh purani vali agar hogi toh voh overwrite hojayegi aur voh display nhi hogi toh hume purani values ki copy banani padegi with help of spread operator
         //  setTodos(todo)
+
         //prev me purana array miljayega aur iss se new array banado aur iss array me purani aur new dono value daldo 
         //isme glti kya hain apko todo banana padega  ese nhi krenge 
         // setTodos((prev)=>[todo , ... prev])
+
         //id me hum voh denge joh barbar change hoga as id should be unique varna loop lagane me dikkat hogi isliye Date.now() ki har bari date alag hogi toh kaam hojayega aur ...todo bhi ek object ha toh usko spread krdiya and ...prev se toh purani array ki copy banjayegi aur todo ko direclty ese pass nhi krskte as voh humne context me ek object ki form me banaya hain 
         setTodos((prev)=>[{id: Date.now() , ...todo} , ...prev])
     }
@@ -19,7 +21,7 @@ function App() {
     function updatedTodo(id , todo) {
          //idhar hume todos wali array me loop lagana padega to find that particular todo which u need to update and we also have id to find that todo 
          //curly braces hata diye varna return krna padta
-         //idhar prev me purai array ajayegi todos wali then uspe loop lagaya with map forEach se bhi krskte hain and then prevTodo har ek value pe jayega uss list ki and hum kya kr rhe ha har ek todo ki id ko compare kr rhe ha humari id se joh humne pass ki agar match hoti ha toh new todo add krdo todo varna same rhene do prevTodo
+         //idhar prev me purani array ajayegi todos wali then uspe loop lagaya with map forEach se bhi krskte hain and then prevTodo har ek value pe jayega uss list ki and hum kya kr rhe ha har ek todo ki id ko compare kr rhe ha humari id se joh humne pass ki agar match hoti ha toh new todo add krdo todo varna same rhene do prevTodo
          setTodos((prev)=> prev.map((prevTodo)=>prevTodo.id === id ? todo : prevTodo ))
     }
 
@@ -29,7 +31,7 @@ function App() {
     }
 
      //isme hume apne todos me jana padega aur toggle krna padega apne checked ko true or false 
-    const toggleComplete = ()=> {
+    const toggleComplete = (id)=> {
 //kya kiya basically prev me old state leli jisme humari array ayegi todo wali uspe map lagaya aur joh todo ki id humari id se match hogi usme completed property ko sirf change krdiya aur baki sabko same rkhna tha toh spread operator ka use krliya jabh id match hogi but id jabh match nhi hogi then todo ko same rhene do toh prevTodo
         setTodos((prev)=>prev.map((prevTodo)=>prevTodo.id === id ? {...prevTodo , completed:!prevTodo.completed} : prevTodo))
     }
@@ -48,7 +50,7 @@ function App() {
          }
     } , [])
 
-    // //iss se yeh ha ki jabh load hua toh sare ke sare todos agye but jese hi yeh sari values load horhi hain me usko localstorage me add krvana chahta hun aur kab add krvana chahta hun jab todos me kuch change hoga tab add krenge localStorage me aur tum try kroge ki apne iss useEffect me dependency me todos daldoge but problem yeh ha ki usme agar kuch bhi change ayega toh voh dubara se usko get bhi krega so we use second useEffect separately we can use multiple useEffect
+    // iss se yeh ha ki jabh load hua toh sare ke sare todos agye but jese hi yeh sari values load horhi hain me usko localstorage me add krvana chahta hun aur kab add krvana chahta hun jab todos me kuch change hoga tab add krenge localStorage me aur tum try kroge ki apne iss useEffect me dependency me todos daldoge but problem yeh ha ki usme agar kuch bhi change ayega toh voh dubara se usko get bhi krega so we use second useEffect separately we can use multiple useEffect
 
     useEffect(()=> {
         //isme hume key aur value dena padta hain aur joh naam keys ka tumne getItem me diya ha lete same vohi same setItem me ayega  aur JSON.stringify string me convert krdega aur humari todos humne pass krdi 
@@ -64,7 +66,7 @@ function App() {
                 <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
                     <h1 className="text-2xl font-bold text-center mb-8 mt-2">Manage Your Todos</h1>
                     <div className="mb-4">
-                        {/* Todo form goes here */} 
+                        <TodoForm/>
                     </div>
                     <div className="flex flex-wrap gap-y-3">
                         {/*Loop and Add TodoItem here */}
